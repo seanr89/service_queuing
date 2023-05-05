@@ -22,6 +22,7 @@ try{
     for(int i = 0; i <= count; i++)
     {
         AnsiConsole.MarkupLine($"current : [green]{i}[/] increment");
+        var rec = EmailContentCreator.CreateBogusEmailContent();
         Thread.Sleep(150);
     }
 }
@@ -30,5 +31,4 @@ catch
     Console.WriteLine($"Error");
     Environment.Exit(1);
 }
-
 
