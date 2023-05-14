@@ -19,8 +19,6 @@ AnsiConsole.Write(
         .Color(Color.Red));
         
 while(true){
-    //Console.WriteLine("Hello, World!");
-
     SendMessage();
 }
 

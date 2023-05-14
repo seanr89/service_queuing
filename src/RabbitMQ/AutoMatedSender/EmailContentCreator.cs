@@ -8,7 +8,7 @@ public static class EmailContentCreator
     {
         var faker = new Faker<EmailContent>()
         .RuleFor(v => v.EmailAddress, f => f.Internet.Email())
-        .RuleFor(v => v.Header, f => f.Lorem.Words(5).ToString())
+        .RuleFor(v => v.Header, f => f.Lorem.Word())
         .RuleFor(v => v.Content, f => f.Lorem.Sentences(1))
         .RuleFor(v => v.Active, true);
 
@@ -19,7 +19,7 @@ public static class EmailContentCreator
     {
         var faker = new Faker<EmailContent>()
         .RuleFor(v => v.EmailAddress, f => f.Internet.Email())
-        .RuleFor(v => v.Header, f => f.Lorem.Words(5).ToString())
+        .RuleFor(v => v.Header, f => f.Lorem.Word())
         .RuleFor(v => v.Content, f => f.Lorem.Sentences(1))
         .RuleFor(v => v.Active, true);
 

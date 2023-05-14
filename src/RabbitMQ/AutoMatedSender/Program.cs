@@ -1,6 +1,7 @@
 ﻿using RabbitMQ.Client;
 using System.Text;
 using Spectre.Console;
+using Newtonsoft.Json;
 
 AnsiConsole.Write(
     new FigletText("Rabbit Sender Auto")
@@ -23,7 +24,14 @@ try{
     {
         AnsiConsole.MarkupLine($"current : [green]{i}[/] increment");
         var rec = EmailContentCreator.CreateBogusEmailContent();
-        Thread.Sleep(50);
+        var content = JsonConvert.SerializeObject(rec);
+        var body = Encoding.UTF8.GetBytes(content);
+
+        channel.BasicPublish(exchange: string.Empty,
+                        routingKey: "emailer",
+                        basicProperties: null,
+                        body: body);
+        Thread.Sleep(250);
     }
 }
 catch
