@@ -7,15 +7,15 @@ AnsiConsole.Write(
         .LeftJustified()
         .Color(Color.Red));
 try{
-    // var factory = new ConnectionFactory { HostName = "localhost" };
-    // var connection = factory.CreateConnection();
-    // var channel = connection.CreateModel();
+    var factory = new ConnectionFactory { HostName = "localhost" };
+    var connection = factory.CreateConnection();
+    var channel = connection.CreateModel();
 
-    // channel.QueueDeclare(queue: "emailer",
-    //                     durable: false,
-    //                     exclusive: false,
-    //                     autoDelete: false,
-    //                     arguments: null);
+    channel.QueueDeclare(queue: "emailer",
+                        durable: false,
+                        exclusive: false,
+                        autoDelete: false,
+                        arguments: null);
     
     var count = AnsiConsole.Ask<int>("Enter a [blue]count[/]?");
 
@@ -23,7 +23,7 @@ try{
     {
         AnsiConsole.MarkupLine($"current : [green]{i}[/] increment");
         var rec = EmailContentCreator.CreateBogusEmailContent();
-        Thread.Sleep(150);
+        Thread.Sleep(50);
     }
 }
 catch
