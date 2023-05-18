@@ -38,5 +38,4 @@ void SendMessage()
                      basicProperties: null,
                      body: body);
     Console.WriteLine($" [x] Sent {message}");
-
 }
