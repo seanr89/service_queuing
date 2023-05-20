@@ -2,6 +2,8 @@
 
 #https://unix.stackexchange.com/questions/146570/arrow-key-enter-menu
 
+set -e
+
 function multiselect {
     # little helpers for terminal print control and key input
     ESC=$( printf "\033")
