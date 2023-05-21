@@ -100,7 +100,8 @@ function multiselect {
     printf "\n"
     cursor_blink_on
 
-    eval $return_value='("${selected[@]}")'
+    echo "${selected[@]}"
+    #eval $return_value='("${selected[@]}")'
 }
 
 array=("one 1" "two 2" "three 3")

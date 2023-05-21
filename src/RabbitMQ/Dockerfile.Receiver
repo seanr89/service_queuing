@@ -1,13 +1,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /app
 
+COPY /Domain/Domain.csproj Domain/
+COPY /Receiver/Receiver.csproj Receiver/
+
 # Copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
+# COPY *.csproj ./
+RUN dotnet restore Receiver/Receiver.csproj
 
 # Copy everything else and build
 COPY . .
-RUN dotnet publish -c Release -o out
+RUN dotnet publish Receiver/Receiver.csproj -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
