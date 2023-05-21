@@ -2,7 +2,7 @@
 
 #https://unix.stackexchange.com/questions/146570/arrow-key-enter-menu
 
-set -e
+# set -e
 
 function multiselect {
     # little helpers for terminal print control and key input
@@ -14,8 +14,8 @@ function multiselect {
     print_active()      { printf "$2  $ESC[7m $1 $ESC[27m"; }
     get_cursor_row()    { IFS=';' read -sdR -p $'\E[6n' ROW COL; echo ${ROW#*[}; }
 
-    ##local return_value=$1
-    #shift
+    local return_value=$1
+    shift
     local options=("$@")
     ##echo $1
     local defaults=$3
@@ -100,11 +100,20 @@ function multiselect {
     printf "\n"
     cursor_blink_on
 
-    echo "${selected[@]}"
-    #eval $return_value='("${selected[@]}")'
-}
+    #echo "${selected[@]}"
+    eval $return_value='("${selected[@]}")'
+    idx=0
+    for option in "${options[@]}"; do
+        if [ ${result[idx]} = true ]; then
+            #print_active "$option" "$prefix"
+            echo -e "$option\t=> ${result[idx]}"
+        fi
+        # echo -e "$option\t=> ${result[idx]}"
+        ((idx++))
+    done
+    }
 
-array=("one 1" "two 2" "three 3")
+array=("one 1" "two 2" "three 3" "option 4" "option 5" "option 6" "option 7")
 #preselection=("true" "true" "false")
 
-multiselect "${array[@]}"
+multiselect result "${array[@]}"
