@@ -14,4 +14,6 @@ or
 
 ## Docker Builds
 run command `docker build .`
-or `docker build . Dockerfile.Receiver`
+or `docker build . -f Dockerfile.Receiver -t 'receiver:latest'`
+or `docker build . -f Dockerfile.AutomatedSender -t 'autosender:latest'`
+or `docker build . -f Dockerfile.Sender -t 'sender:latest'`

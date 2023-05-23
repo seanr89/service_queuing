@@ -2,18 +2,18 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /app
 
 COPY /Domain/Domain.csproj Domain/
-COPY /AutomatedSender/AutomatedSender.csproj AutomatedSender/
+COPY /AutoMatedSender/AutoMatedSender.csproj AutoMatedSender/
 
 # Copy csproj and restore as distinct layers
 # COPY *.csproj ./
-RUN dotnet restore AutomatedSender/AutomatedSender.csproj
+RUN dotnet restore AutoMatedSender/AutoMatedSender.csproj
 
 # Copy everything else and build
 COPY . .
-RUN dotnet publish AutomatedSender/AutomatedSender.csproj -c Release -o out
+RUN dotnet publish AutoMatedSender/AutoMatedSender.csproj -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "AutomatedSender.dll"]
+ENTRYPOINT ["dotnet", "AutoMatedSender.dll"]
