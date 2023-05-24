@@ -17,3 +17,6 @@ run command `docker build .`
 or `docker build . -f Dockerfile.Receiver -t 'receiver:latest'`
 or `docker build . -f Dockerfile.AutomatedSender -t 'autosender:latest'`
 or `docker build . -f Dockerfile.Sender -t 'sender:latest'`
+
+## Docker Compose
+run compose `docker compose up`

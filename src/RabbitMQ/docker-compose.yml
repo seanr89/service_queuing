@@ -17,6 +17,15 @@ services:
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
         - rabbitmq_go_net
+  receiver:
+    image: receiver:latest
+    container_name: receiver
+    environment:
+      - host=rabbitmq
+    depends_on:
+      - rabbitmq
+    networks:
+      - rabbitmq_go_net
 
 networks:
   rabbitmq_go_net:

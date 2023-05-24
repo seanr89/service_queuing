@@ -9,7 +9,11 @@ AnsiConsole.Write(
         .LeftJustified()
         .Color(Color.Red));
 
-var factory = new ConnectionFactory { HostName = "localhost" };
+var host = Environment.GetEnvironmentVariable("host") ?? "localhost";
+
+Console.WriteLine($"Host: {host}");
+
+var factory = new ConnectionFactory { HostName = host };
 var connection = factory.CreateConnection();
 var channel = connection.CreateModel();
 var channelMessager = connection.CreateModel();
