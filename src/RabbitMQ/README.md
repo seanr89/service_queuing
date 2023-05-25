@@ -11,10 +11,12 @@ or
 ## Links
 [link](https://www.rabbitmq.com/tutorials/tutorial-one-dotnet.html)
 [link](https://code-maze.com/aspnetcore-rabbitmq/)
+[link](https://iqan.medium.com/containerizing-a-net-core-service-with-docker-cd9bb42fa6b)
 
 ## Docker Builds
 run command `docker build .`
 or `docker build . -f Dockerfile.Receiver -t 'receiver:latest'`
+or `docker build . -f Dockerfile.ReceiverHost -t 'receiverhost:latest'`
 or `docker build . -f Dockerfile.AutomatedSender -t 'autosender:latest'`
 or `docker build . -f Dockerfile.Sender -t 'sender:latest'`
 

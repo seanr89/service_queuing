@@ -1,0 +1,19 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+WORKDIR /app
+
+COPY /Domain/Domain.csproj Domain/
+COPY /ReceiverHost/ReceiverHost.csproj ReceiverHost/
+
+# Copy csproj and restore as distinct layers
+# COPY *.csproj ./
+RUN dotnet restore ReceiverHost/ReceiverHost.csproj
+
+# Copy everything else and build
+COPY . .
+RUN dotnet publish ReceiverHost/ReceiverHost.csproj -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "ReceiverHost.dll"]
