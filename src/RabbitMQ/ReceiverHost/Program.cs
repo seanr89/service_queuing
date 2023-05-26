@@ -20,6 +20,3 @@ var host = Host.CreateDefaultBuilder(args)
     }).Build();
 
 host.Run();
-// var logger = host.Services.GetRequiredService<ILogger<Program>>();
-// logger.LogDebug("Host created.");
-// host.Services.GetService<MyInjectedClass>().Execute().Wait();

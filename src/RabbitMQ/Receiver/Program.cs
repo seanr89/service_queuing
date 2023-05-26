@@ -33,6 +33,7 @@ while(true){
 
     Console.WriteLine(" [*] Waiting for messages.");
 
+    // Working email handler
     var consumer = new EventingBasicConsumer(channel);
     consumer.Received += (model, ea) =>
     {
@@ -42,12 +43,12 @@ while(true){
         Console.WriteLine($" [v] Emailer: Received {jsonContent?.ToString()}");
     };
 
+    // Base/Test consumer
     var consumerMessager = new EventingBasicConsumer(channelMessager);
     consumerMessager.Received += (model, ea) =>
     {
         var body = ea.Body.ToArray();
         var message = Encoding.UTF8.GetString(body);
-        //var jsonContent = JsonConvert.DeserializeObject<EmailContent>(message);
         Console.WriteLine($" [x] Messager: Received {message}");
     };
 
