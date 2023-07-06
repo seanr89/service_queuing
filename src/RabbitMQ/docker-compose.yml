@@ -32,6 +32,19 @@ services:
         condition: service_healthy
     networks:
       - rabbitmq_go_net
+  autosender:
+    image: backgroundsender:latest
+    #container_name: 'rabbitmqsender'
+    environment:
+      - host=rabbitmq
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    deploy:
+      mode: replicated
+      replicas: 2
+    networks:
+      - rabbitmq_go_net
 
 networks:
   rabbitmq_go_net:

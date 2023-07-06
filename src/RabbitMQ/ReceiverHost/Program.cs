@@ -13,7 +13,8 @@ IConfiguration config = new ConfigurationBuilder()
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
-        services.AddHostedService<ReceiverService>();
+        //services.AddHostedService<ReceiverService>();
+        services.AddHostedService<EmailerService>();
     })
         .ConfigureLogging((context, logging) => {
         logging.AddConfiguration(context.Configuration.GetSection("Logging"));

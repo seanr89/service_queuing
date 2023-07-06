@@ -8,10 +8,12 @@ using System.Text;
 
 public class BackgroundSender : BackgroundService
 {
+    private readonly string _name;
     private readonly ILogger<BackgroundSender> _logger;
     public BackgroundSender(ILogger<BackgroundSender> logger)
     {
         _logger = logger;
+        _name = Util.CreateRandomName();
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -20,7 +22,7 @@ public class BackgroundSender : BackgroundService
         {
             _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
             await BackgroundProcessing(stoppingToken);
-            await Task.Delay(1000, stoppingToken);
+            await Task.Delay(1500, stoppingToken);
         }
     }
 
@@ -47,6 +49,7 @@ public class BackgroundSender : BackgroundService
                 {
                     AnsiConsole.MarkupLine($"current : [green]{i}[/] increment");
                     var rec = EmailContentCreator.CreateBogusEmailContent();
+                    rec.Sender = _name;
                     var content = JsonConvert.SerializeObject(rec);
                     var body = Encoding.UTF8.GetBytes(content);
 
@@ -54,7 +57,7 @@ public class BackgroundSender : BackgroundService
                                     routingKey: "emailer",
                                     basicProperties: null,
                                     body: body);
-                    Thread.Sleep(50);
+                    Thread.Sleep(25);
                 }
             }
             catch (Exception ex)
