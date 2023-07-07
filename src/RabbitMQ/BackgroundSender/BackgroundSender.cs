@@ -33,41 +33,42 @@ public class BackgroundSender : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            Random r = new Random();
-            int rInt = r.Next(0, 55);
+            await Task.Run(() => {
+                Random r = new Random();
+                int rInt = r.Next(0, 55);
 
-            try
-            {
-                var factory = new ConnectionFactory { HostName = _host };
-                var connection = factory.CreateConnection();
-                var channel = connection.CreateModel();
-
-                channel.QueueDeclare(queue: "emailer",
-                                    durable: false,
-                                    exclusive: false,
-                                    autoDelete: false,
-                                    arguments: null);
-
-                for(int i = 0; i <= rInt; i++)
+                try
                 {
-                    //AnsiConsole.MarkupLine($"current : [green]{i}[/] increment");
-                    var rec = EmailContentCreator.CreateBogusEmailContent();
-                    rec.Sender = _name;
-                    var content = JsonConvert.SerializeObject(rec);
-                    var body = Encoding.UTF8.GetBytes(content);
+                    var factory = new ConnectionFactory { HostName = _host };
+                    var connection = factory.CreateConnection();
+                    var channel = connection.CreateModel();
 
-                    channel.BasicPublish(exchange: string.Empty,
-                                    routingKey: "emailer",
-                                    basicProperties: null,
-                                    body: body);
-                    Thread.Sleep(125);
+                    channel.QueueDeclare(queue: "emailer",
+                                        durable: false,
+                                        exclusive: false,
+                                        autoDelete: false,
+                                        arguments: null);
+
+                    for(int i = 0; i <= rInt; i++)
+                    {
+                        var rec = EmailContentCreator.CreateBogusEmailContent();
+                        rec.Sender = _name;
+                        var content = JsonConvert.SerializeObject(rec);
+                        var body = Encoding.UTF8.GetBytes(content);
+
+                        channel.BasicPublish(exchange: string.Empty,
+                                        routingKey: "emailer",
+                                        basicProperties: null,
+                                        body: body);
+                        Thread.Sleep(125);
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, 
-                    "Error occurred executing");
-            }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, 
+                        "Error occurred executing sender.");
+                }
+            });
         }
     }
 

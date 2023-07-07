@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Spectre.Console;
+﻿using Spectre.Console;
 using RabbitMQ.Client;
 using System.Text;
 
@@ -21,9 +20,6 @@ AnsiConsole.Write(
 while(true){
     SendMessage();
 }
-
-Environment.Exit(1);
-
 
 /// <summary>
 /// Simple message test
