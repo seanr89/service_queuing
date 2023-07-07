@@ -8,7 +8,9 @@ public record EmailContent{
 
     public override string ToString()
     {
-        var res = $"Address: {EmailAddress} from Sender: {Sender} with Header: {Header} and Content: {Content}";
+        // var res = $"Address: {EmailAddress} from Sender: {Sender} with Header: {Header} and Content: {Content}";
+        // return res;
+        var res = $"Address: {EmailAddress} from Sender: {Sender}";
         return res;
     }
 }

@@ -42,7 +42,7 @@ services:
         condition: service_healthy
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 2
     networks:
       - rabbitmq_go_net
 

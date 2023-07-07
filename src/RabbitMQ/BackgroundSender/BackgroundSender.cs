@@ -34,7 +34,7 @@ public class BackgroundSender : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             Random r = new Random();
-            int rInt = r.Next(0, 100);
+            int rInt = r.Next(0, 55);
 
             try
             {
@@ -50,7 +50,7 @@ public class BackgroundSender : BackgroundService
 
                 for(int i = 0; i <= rInt; i++)
                 {
-                    AnsiConsole.MarkupLine($"current : [green]{i}[/] increment");
+                    //AnsiConsole.MarkupLine($"current : [green]{i}[/] increment");
                     var rec = EmailContentCreator.CreateBogusEmailContent();
                     rec.Sender = _name;
                     var content = JsonConvert.SerializeObject(rec);
@@ -65,8 +65,6 @@ public class BackgroundSender : BackgroundService
             }
             catch (Exception ex)
             {
-                // _logger.LogError(ex, 
-                //     "Error occurred executing {WorkItem}.", nameof(workItem));
                 _logger.LogError(ex, 
                     "Error occurred executing");
             }

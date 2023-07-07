@@ -10,7 +10,7 @@ public class EmailerService : IHostedService, IDisposable
 {
     private readonly ILogger _logger;
     private Timer _timer;
-    
+    internal int count = 0;
     internal readonly string _host;
 
     public EmailerService(ILogger<EmailerService> logger)
@@ -23,9 +23,6 @@ public class EmailerService : IHostedService, IDisposable
     public Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Service is starting.");
-
-        // _timer = new Timer(DoWork, null, TimeSpan.Zero,
-        //     TimeSpan.FromSeconds(5));
         
         var factory = new ConnectionFactory { HostName = _host };
         var connection = factory.CreateConnection();
@@ -45,6 +42,7 @@ public class EmailerService : IHostedService, IDisposable
             var message = Encoding.UTF8.GetString(body);
             var jsonContent = JsonConvert.DeserializeObject<EmailContent>(message);
             Console.WriteLine($" [v] Emailer: Received {jsonContent?.ToString()}");
+            count++;
         };
 
         channelMessager.BasicConsume(queue: "emailer",
@@ -59,7 +57,7 @@ public class EmailerService : IHostedService, IDisposable
 
     private void DoWork(object state)
     {
-        _logger.LogInformation("Service is running.");
+        _logger.LogInformation($"Service has process {count} messages.");
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

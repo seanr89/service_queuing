@@ -10,8 +10,8 @@ public class ReceiverService : IHostedService, IDisposable
 {
     private readonly ILogger _logger;
     private Timer _timer;
-    
     internal readonly string _host;
+    internal int count = 0;
 
     public ReceiverService(ILogger<ReceiverService> logger)
     {
@@ -23,9 +23,6 @@ public class ReceiverService : IHostedService, IDisposable
     public Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Service is starting.");
-
-        // _timer = new Timer(DoWork, null, TimeSpan.Zero,
-        //     TimeSpan.FromSeconds(5));
         
         var factory = new ConnectionFactory { HostName = _host };
         var connection = factory.CreateConnection();
@@ -45,6 +42,7 @@ public class ReceiverService : IHostedService, IDisposable
             var message = Encoding.UTF8.GetString(body);
             //var jsonContent = JsonConvert.DeserializeObject<EmailContent>(message);
             Console.WriteLine($" [x] Messager: Received {message}");
+            count++;
         };
 
         channelMessager.BasicConsume(queue: "messager",
@@ -52,7 +50,7 @@ public class ReceiverService : IHostedService, IDisposable
             consumer: consumerMessager);
 
         _timer = new Timer(DoWork, null, TimeSpan.Zero,
-            TimeSpan.FromSeconds(5));
+            TimeSpan.FromSeconds(3));
 
         return Task.CompletedTask;
     }

@@ -17,4 +17,7 @@ docker build . -f Dockerfile.ReceiverHost -t 'receiverhost:latest'
 echo "Building Docker Image - Sender"
 docker build . -f Dockerfile.Sender -t 'sender:latest'
 
+echo "Building Docker Image - Receiver"
+docker build . -f Dockerfile.Receiver -t 'receiver:latest'
+
 echo "App Complete!"
